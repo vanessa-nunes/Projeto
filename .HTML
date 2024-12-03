@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa e Cadastro de Dados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1 {
+            margin-bottom: 20px;
+        }
+
+        .container input,
+        .container button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .container button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .container button:hover {
+            background-color: #0056b3;
+        }
+
+        .cadastro-container,
+        .pesquisa-container,
+        .resultado-container {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container pesquisa-container active">
+        <h1>Pesquisa de Dados</h1>
+        <input type="text" id="nome" placeholder="Digite o nome">
+        <button onclick="pesquisar()">Pesquisar</button>
+        <button onclick="mostrarCadastro()">Cadastrar</button>
+    </div>
+
+    <div class="container cadastro-container">
+        <h1>Cadastro de Pessoa</h1>
+        <input type="text" id="cadastroNome" placeholder="Digite o nome">
+        <input type="text" id="cadastroEndereco" placeholder="Digite o endereço">
+        <input type="text" id="cadastroTelefone" placeholder="Digite o telefone">
+        <input type="text" id="cadastroCpf" placeholder="Digite o CPF">
+        <input type="text" id="cadastroAlvara" placeholder="Digite o número de alvará">
+        <input type="date" id="cadastroVencimentoAlvara" placeholder="Digite a data de vencimento do alvará">
+        <input type="password" id="cadastroSenha" placeholder="Digite a senha">
+        <label for="cadastroDocumento">Anexar foto do documento do carro:</label>
+        <input type="file" id="cadastroDocumento">
+        <label for="cadastroServicos">Anexar serviços feitos:</label>
+        <input type="file" id="cadastroServicos">
+        <button onclick="cadastrar()">Salvar</button>
+        <button onclick="mostrarPesquisa()">Voltar para Pesquisa</button>
+    </div>
+
+    <div class="container resultado-container">
+        <h1>Dados da Pessoa</h1>
+        <p><strong>Nome:</strong> <span id="resultadoNome"></span></p>
+        <p><strong>Endereço:</strong> <span id="resultadoEndereco"></span></p>
+        <p><strong>CPF:</strong> <span id="resultadoCpf"></span></p>
+        <p><strong>Documento do Carro:</strong> <a id="resultadoDocumento" href="#" target="_blank">Abrir PDF</a></p>
+        <p><strong>Serviços Feitos:</strong> <a id="resultadoServicos" href="#" target="_blank">Abrir PDF</a></p>
+        <button onclick="mostrarPesquisa()">Voltar para Pesquisa</button>
+    </div>
+
+    <script>
+        function pesquisar() {
+            const nome = document.getElementById('nome').value;
+            const dados = {
+                nome: nome,
+                endereco: 'Rua Exemplo, 123',
+                cpf: '123.456.789-00',
+                documento: 'documento_carro.pdf',
+                servicos: 'servicos_feitos.pdf'
+            };
+            document.getElementById('resultadoNome').innerText = dados.nome;
+            document.getElementById('resultadoEndereco').innerText = dados.endereco;
+            document.getElementById('resultadoCpf').innerText = dados.cpf;
+            document.getElementById('resultadoDocumento').href = dados.documento;
+            document.getElementById('resultadoServicos').href = dados.servicos;
+            document.querySelector('.pesquisa-container').classList.remove('active');
+            document.querySelector('.resultado-container').classList.add('active');
+        }
+
+        function mostrarCadastro() {
+            document.querySelector('.pesquisa-container').classList.remove('active');
+            document.querySelector('.cadastro-container').classList.add('active');
+        }
+
+        function mostrarPesquisa() {
+            document.querySelector('.cadastro-container').classList.remove('active');
+            document.querySelector('.resultado-container').classList.remove('active');
+            document.querySelector('.pesquisa-container').classList.add('active');
+        }
+
+        function cadastrar() {
+            const nome = document.getElementById('cadastroNome').value;
+            const endereco = document.getElementById('cadastroEndereco').value;
+            const telefone = document.getElementById('cadastroTelefone').value;
+            const cpf = document.getElementById('cadastroCpf').value;
+            const alvara = document.getElementById('cadastroAlvara').value;
+            const vencimentoAlvara = document.getElementById('cadastroVencimentoAlvara').value;
+            const senha = document.getElementById('cadastroSenha').value;
+            const documento = document.getElementById('cadastroDocumento').files[0];
+            const servicos = document.getElementById('cadastroServicos').files[0];
+            alert('Cadastro realizado com sucesso!\\nNome: ' + nome + '\\nEndereço: ' + endereco + '\\nTelefone: ' + telefone + '\\nCPF: ' + cpf + '\\nNúmero de Alvará: ' + alvara + '\\nData de Vencimento do Alvará: ' + vencimentoAlvara + '\\nSenha: ' + senha + '\\nDocumento: ' + documento.name + '\\nServiços: ' + servicos.name);
+            mostrarPesquisa();
+        }
+    </script>
+</body>
+
+</html>
